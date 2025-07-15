@@ -1,4 +1,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Chatroom } from './chatroom.model.js';
+import { Message } from './message.model.js';
 
 export enum Tier {
     BASIC = 'BASIC',
@@ -11,6 +13,21 @@ export class User extends Model {
     public name?: string;
     public password?: string;
     public tier!: Tier
+
+    static associate() {
+        User.hasMany(Chatroom, {
+            foreignKey: 'userId',
+            as: 'chatrooms',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        });
+        User.hasMany(Message, {
+            foreignKey: 'userId',
+            as: 'messages',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        });
+    }
 };
 
 export const initUserModel = (sequelize: Sequelize) => {

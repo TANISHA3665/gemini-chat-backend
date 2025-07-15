@@ -1,10 +1,27 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { User } from './user.model.js';
+import { Message } from './message.model.js';
 
 export class Chatroom extends Model {
     public id!: string;
     public userId!: string;
     public topic!: string;
+
+    static associate() {
+        Chatroom.belongsTo(User, {
+            foreignKey: 'userId',
+            as: 'user',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+        });
+
+        Chatroom.hasMany(Message, {
+            foreignKey: 'chatroomId',
+            as: 'messages',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+        });
+    }
 };
 
 export const initChatroomModel = (sequelize: Sequelize) => {
@@ -18,10 +35,6 @@ export const initChatroomModel = (sequelize: Sequelize) => {
             userId: {
                 type: DataTypes.UUID,
                 allowNull: false,
-                references: {
-                    model: 'users',
-                    key: 'id',
-                }
             },
             topic: {
                 type: DataTypes.STRING,
@@ -30,10 +43,9 @@ export const initChatroomModel = (sequelize: Sequelize) => {
         },
         {
             sequelize,
+            modelName: 'Chatroom',
             tableName: 'chatrooms',
             timestamps: true,
         }
     );
 };
-
-Chatroom.belongsTo(User, { foreignKey: 'userId', as: 'user', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
