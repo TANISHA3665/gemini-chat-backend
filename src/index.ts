@@ -1,7 +1,9 @@
 import express, { Response } from 'express';
 import { sequelize } from './config/sequelize.config.js';
 import { ENV } from './config/env.config.js';
-import authRoutes from './routes/auth.routes.js'
+import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
+import chatroomRoutes from './routes/chatroom.routes.js';
 
 // Init Express App
 const app = express();
@@ -16,6 +18,8 @@ app.get('/health', (res: Response) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/chatroom', chatroomRoutes);
 
 // Start Server
 const start = async () => {

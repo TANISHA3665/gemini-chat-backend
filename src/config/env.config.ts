@@ -16,4 +16,5 @@ export const ENV = {
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '1h',
 
     REDIS_URL: process.env.REDIS_URL,
+
 };
