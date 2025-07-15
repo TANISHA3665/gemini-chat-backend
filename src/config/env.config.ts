@@ -11,4 +11,9 @@ export const ENV = {
         PASS: process.env.DB_PASS!,
         NAME: process.env.DB_NAME!,
     },
+
+    JWT_SECRET: process.env.JWT_SECRET!,
+    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '1h',
+
+    REDIS_URL: process.env.REDIS_URL,
 };

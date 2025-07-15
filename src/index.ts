@@ -1,6 +1,7 @@
 import express, { Response } from 'express';
 import { sequelize } from './config/sequelize.config.js';
 import { ENV } from './config/env.config.js';
+import authRoutes from './routes/auth.routes.js'
 
 // Init Express App
 const app = express();
@@ -13,6 +14,8 @@ app.get('/health', (res: Response) => {
     res.status(200).json({ status: 'OK', environment: ENV.NODE_ENV });
 });
 
+// Routes
+app.use('/api/auth', authRoutes);
 
 // Start Server
 const start = async () => {

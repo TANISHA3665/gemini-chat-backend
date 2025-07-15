@@ -1,0 +1,12 @@
+// src/modules/user/user.controller.ts
+import { Response } from 'express';
+import { AuthenticatedRequest } from '../middlewares/authenticate.middleware.js';
+import { UserService } from '../services/user.service.js';
+
+export const UserController = {
+    async getProfile(req: AuthenticatedRequest, res: Response) {
+        const userId = req.user.id;
+        const user = await UserService.getUserById(userId);
+        res.status(200).json({ user });
+    }
+};

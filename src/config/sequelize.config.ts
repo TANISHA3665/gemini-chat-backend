@@ -6,8 +6,9 @@ export const sequelize = new Sequelize(
     ENV.DB.USER,
     ENV.DB.PASS,
     {
-    dialect: 'postgres',
-    host: ENV.DB.HOST,
-    port: ENV.DB.PORT,
-    logging: ENV.NODE_ENV !== 'production',
-});
+        dialect: 'postgres',
+        host: ENV.DB.HOST,
+        port: ENV.DB.PORT,
+        logging: ENV.NODE_ENV !== 'production',
+    }
+);
