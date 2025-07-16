@@ -19,6 +19,6 @@ router.get('/:id', authenticate, ChatroomController.getById);
 // Message routes
 router.post('/:id/message', authenticate, geminiRateLimit, validate(sendMessageSchema), MessageController.send);
 
-router.get('/history/:chatroomId', authenticate, MessageController.history);
+router.get('/history/:chatroomId', authenticate, MessageController.list);
 
 export default router;

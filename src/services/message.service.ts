@@ -1,28 +1,17 @@
+import {
+    CreateMessageInput,
+    ListMessagesInput
+} from '../types/message.types.js';
 import { MessageRepository } from '../repositories/message.repository.js';
-import { generateGeminiReply } from '../utils/gemini.js';
 
 export const MessageService = {
-    async sendAndRespond(userId: string, chatroomId: string, content: string) {
-        const userMessage = await MessageRepository.create({
-            userId,
-            chatroomId,
-            content,
-            role: 'USER',
-        });
-
-        const aiContent = await generateGeminiReply(content);
-
-        const aiMessage = await MessageRepository.create({
-            userId,
-            chatroomId,
-            content: aiContent,
-            role: 'AI',
-        });
-
-        return [userMessage, aiMessage];
+    async create(payload: CreateMessageInput) {
+        const { chatroomId, userId, content, role } = payload;
+        return await MessageRepository.create({ chatroomId, userId, content, role });
     },
 
-    async getHistory(chatroomId: string) {
+    async list(payload: ListMessagesInput) {
+        const { chatroomId, userId } = payload;
         return await MessageRepository.findByChatroom(chatroomId);
-    },
+    }
 };

@@ -1,30 +1,59 @@
 import { Response, NextFunction } from 'express';
 import { MessageService } from '../services/message.service.js';
+import { GeminiQueue, GeminiQueueEvents } from '../libs/bullmq.js';
 import { AuthenticatedRequest } from '../types/auth.types.js';
+import { MessageRole } from '../models/message.model.js';
 
 export const MessageController = {
     async send(req: AuthenticatedRequest, res: Response, next: NextFunction) {
         try {
             const { content } = req.body;
-            const { id: chatroomId } = req.params;
+            const chatroomId = req.params.id;
             
-            if (!req.user) {
-                return res.status(401).json({ error: 'Unauthorized: User not found.' });
+            if (!req.user || !req.user.id) {
+                return res.status(401).json({ error: 'Unauthorized: user not found' });
             }
 
-            const [userMsg, aiMsg] = await MessageService.sendAndRespond(req.user.id, chatroomId, content);
-            res.status(201).json({ userMsg, aiMsg });
+            const userId = req.user.id;
+
+            // Save user message
+            await MessageService.create({
+                chatroomId,
+                userId,
+                content,
+                role: MessageRole.USER,
+            });
+
+            // Push Gemini reply job to queue
+            const job = await GeminiQueue.add('generate-gemini', {
+                prompt: content,
+                chatroomId,
+                userId,
+            });
+
+            // Wait for AI reply from worker
+            const aiReply: string = await job.waitUntilFinished(GeminiQueueEvents);
+
+            res.status(200).json({ reply: aiReply });
         } catch (err) {
             next(err);
         }
     },
 
-    async history(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    async list(req: AuthenticatedRequest, res: Response, next: NextFunction) {
         try {
-            const messages = await MessageService.getHistory(req.params.chatroomId);
+            const chatroomId = req.params.id;
+            
+            if (!req.user || !req.user.id) {
+                return res.status(401).json({ error: 'Unauthorized: user not found' });
+            }
+            
+            const userId = req.user.id;
+
+            const messages = await MessageService.list({ chatroomId, userId });
             res.json({ messages });
         } catch (err) {
             next(err);
         }
-    },
+    }
 };

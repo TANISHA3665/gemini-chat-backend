@@ -1,6 +1,6 @@
 import { generateOtp } from '../utils/otp.js';
 import { signJwt } from '../utils/jwt.js';
-import { AuthSendOtpInput, AuthVerifyOtpInput, changePassword, JwtPayload } from '../types/auth.types.js';
+import { AuthSendOtpInput, AuthVerifyOtpInput, changePasswordInput, JwtPayload } from '../types/auth.types.js';
 import { UserRepository } from '../repositories/user.repository.js';
 import { AuthRepository } from '../repositories/auth.repository.js';
 import { checkOtpRateLimit } from '../utils/otpRateLimit.js';
@@ -47,7 +47,7 @@ export const AuthService = {
         return { token };
     },
 
-    async changePassword(data: changePassword) {
+    async changePassword(data: changePasswordInput) {
         const user = await UserRepository.findById(data.id);
         if (!user) throw new Error('User not found');
 

@@ -1,16 +1,18 @@
 import { ChatroomRepository } from '../repositories/chatroom.repository.js';
 import { Cache } from '../utils/cache.js';
+import { CreateChatroomInput, GetChatroomInput, ListChatroomsInput } from '../types/chatroom.types.js';
 
 export const ChatroomService = {
-    async create(userId: string, topic: string) {
+    async create(payload: CreateChatroomInput) {
+        const { userId, topic } = payload;
         const chatroom = await ChatroomRepository.create({ userId, topic });
-        
+
         await Cache.del(`chatrooms:${userId}`);
-        
         return chatroom;
     },
 
-    async list(userId: string) {
+    async list(payload: ListChatroomsInput) {
+        const { userId } = payload;
         const cacheKey = `chatrooms:${userId}`;
         const cached = await Cache.get(cacheKey);
 
@@ -24,8 +26,8 @@ export const ChatroomService = {
         return chatrooms;
     },
 
-    async getById(id: string, userId: string) {
+    async getById(payload: GetChatroomInput) {
+        const { id, userId } = payload;
         return await ChatroomRepository.findByIdAndUser(id, userId);
-    },
+    }
 };
-
