@@ -24,7 +24,8 @@ export async function verifyOtp(req: Request, res: Response, next: NextFunction)
 
 export async function signup(req: Request, res: Response, next: NextFunction) {
     try {
-        const token = await AuthService.signup(req.body);
+        const { mobile } = req.body;
+        const token = await AuthService.signup({ mobile });
         res.status(201).json({ token });
     } catch (err) {
         next(err);
@@ -35,12 +36,10 @@ export async function changePassword(req: AuthenticatedRequest, res: Response, n
     try {
         const { newPassword } = req.body;
 
-        if (req.user) {
-            const id = req.user.id;
-            await AuthService.changePassword({ id, newPassword });
-        }
-
-        res.json({ message: 'Password updated' });
+        const id = req.user!.id;
+        await AuthService.changePassword({ id, newPassword });
+        
+        res.status(200).json({ message: 'Password updated successfully' });
     } catch (err) {
         next(err);
     }

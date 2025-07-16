@@ -18,4 +18,9 @@ export const ENV = {
     REDIS_URL: process.env.REDIS_URL,
 
     GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
+
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
+    STRIPE_PRICE_ID: process.env.STRIPE_PRICE_ID,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
 };

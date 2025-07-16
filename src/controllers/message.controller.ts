@@ -8,12 +8,7 @@ export async function send(req: AuthenticatedRequest, res: Response, next: NextF
     try {
         const { content } = req.body;
         const chatroomId = req.params.id;
-
-        if (!req.user || !req.user.id) {
-            return res.status(401).json({ error: 'Unauthorized: user not found' });
-        }
-
-        const userId = req.user.id;
+        const userId = req.user!.id;
 
         // Save user message
         await MessageService.create({
@@ -30,7 +25,7 @@ export async function send(req: AuthenticatedRequest, res: Response, next: NextF
             userId,
         });
 
-        // Wait for AI reply from worker
+        // Wait for reply from worker
         const aiReply: string = await job.waitUntilFinished(GeminiQueueEvents);
 
         res.status(200).json({ reply: aiReply });
@@ -42,12 +37,7 @@ export async function send(req: AuthenticatedRequest, res: Response, next: NextF
 export async function list(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
         const chatroomId = req.params.id;
-
-        if (!req.user || !req.user.id) {
-            return res.status(401).json({ error: 'Unauthorized: user not found' });
-        }
-
-        const userId = req.user.id;
+        const userId = req.user!.id;
 
         const messages = await MessageService.list({ chatroomId, userId });
         res.json({ messages });
