@@ -3,7 +3,7 @@ import { signJwt } from '../utils/jwt.js';
 import { AuthSendOtpInput, AuthVerifyOtpInput, JwtPayload } from '../types/auth.types.js';
 import { UserRepository } from '../repositories/user.repository.js';
 import { AuthRepository } from '../repositories/auth.repository.js';
-import { checkOtpRateLimit } from '../utils/rateLimit.js';
+import { checkOtpRateLimit } from '../utils/otpRateLimit.js';
 
 export const AuthService = {
 
@@ -16,7 +16,7 @@ export const AuthService = {
 
         const otp = generateOtp();
         await AuthRepository.storeOtp(data.mobile, otp);
-        
+
         return { mobile: data.mobile, otp };
     },
 
