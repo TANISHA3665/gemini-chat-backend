@@ -1,8 +1,5 @@
-import {
-    CreateMessageInput,
-    ListMessagesInput
-} from '../types/message.types.js';
-import { MessageRepository } from '../repositories/message.repository.js';
+import { CreateMessageInput, ListMessagesInput } from '../types/index.js';
+import { MessageRepository } from '../repositories/index.js';
 
 export const MessageService = {
     async create(payload: CreateMessageInput) {

@@ -1,0 +1,1 @@
+import './gemini.worker.js';

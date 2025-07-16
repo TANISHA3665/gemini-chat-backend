@@ -1,6 +1,6 @@
-import { ChatroomRepository } from '../repositories/chatroom.repository.js';
-import { Cache } from '../utils/cache.js';
-import { CreateChatroomInput, GetChatroomInput, ListChatroomsInput } from '../types/chatroom.types.js';
+import { ChatroomRepository } from '../repositories/index.js';
+import { Cache } from '../utils/index.js';
+import { CreateChatroomInput, GetChatroomInput, ListChatroomsInput } from '../types/index.js';
 
 export const ChatroomService = {
     async create(payload: CreateChatroomInput) {

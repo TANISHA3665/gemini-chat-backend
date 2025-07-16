@@ -1,7 +1,7 @@
 import { Worker } from '../libs/bullmq.js';
-import { MessageRole } from '../models/message.model.js';
-import { MessageService } from '../services/message.service.js';
-import { generateGeminiReply } from '../utils/gemini.js';
+import { MessageRole } from '../models/index.js';
+import { MessageService } from '../services/index.js';
+import { generateGeminiReply } from '../utils/index.js';
 
 new Worker(
     'gemini',

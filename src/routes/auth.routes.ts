@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { validate } from '../middlewares/validate.middleware.js';
-import { changePasswordSchema, sendOtpSchema, signupSchema, verifyOtpSchema } from '../validators/auth.validator.js';
-import { authenticate } from '../middlewares/authenticate.middleware.js';
-import { AuthController } from '../controllers/auth.controller.js';
+import { authenticate, validate } from '../middlewares/index.js';
+import { changePasswordSchema, sendOtpSchema, signupSchema, verifyOtpSchema } from '../validators/index.js';
+import { AuthController } from '../controllers/index.js';
 
 const router = Router();
 

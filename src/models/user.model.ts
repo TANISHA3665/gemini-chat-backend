@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { Chatroom } from './chatroom.model.js';
-import { Message } from './message.model.js';
+import { Chatroom, Message } from '../models/index.js';
 
 export enum Tier {
     BASIC = 'BASIC',

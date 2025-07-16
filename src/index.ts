@@ -1,42 +1,38 @@
-import express, { Response } from 'express';
+import express, { Request, Response } from 'express';
 import { ENV } from './config/env.config.js';
-import authRoutes from './routes/auth.routes.js';
-import userRoutes from './routes/user.routes.js';
-import chatroomRoutes from './routes/chatroom.routes.js';
-import { sequelize } from './libs/db.js';
 
-// Init Express App
+import mainRoutes from './routes/index.js';
+
+import { connectToDatabase, connectToRedis } from './libs/init/index.js';
+
+import { errorHandler } from './middlewares/index.js';
+import './queues/index.js';
+
 const app = express();
-
-// Middlewares
 app.use(express.json());
 
-// Health Check
-app.get('/health', (res: Response) => {
+// Health check
+app.get('/health', (_req: Request, res: Response) => {
     res.status(200).json({ status: 'OK', environment: ENV.NODE_ENV });
 });
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/chatroom', chatroomRoutes);
+app.use('/api', mainRoutes);
 
-// Start Server
-const start = async () => {
+app.use(errorHandler);
+
+const startServer = async () => {
     try {
-        await sequelize.authenticate();
-        console.log('DB connected');
-
-        await sequelize.sync();
-        console.log('Sequelize synced');
+        await connectToDatabase();
+        await connectToRedis();
 
         app.listen(ENV.PORT, () => {
-            console.log(`Server running on http://localhost:${ENV.PORT}`);
+            console.log(` Server running on http://localhost:${ENV.PORT}`);
         });
     } catch (err) {
-        console.error('Error starting server:', err);
+        console.error('Server failed to start:', err);
         process.exit(1);
     }
 };
 
-start();
+startServer();

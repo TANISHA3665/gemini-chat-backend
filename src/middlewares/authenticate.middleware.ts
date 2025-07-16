@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
-import { verifyJwt } from '../utils/jwt.js';
-import { AuthenticatedRequest, JwtPayload } from '../types/auth.types.js';
+import { verifyJwt } from '../utils/index.js';
+import { AuthenticatedRequest, JwtPayload } from '../types/index.js';
 
 
 export const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {

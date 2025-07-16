@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { User } from './user.model.js';
-import { Chatroom } from './chatroom.model.js';
+import { User, Chatroom } from '../models/index.js';
 
 export enum MessageRole { 
     USER = 'USER',

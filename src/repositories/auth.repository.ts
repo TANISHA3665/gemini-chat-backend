@@ -1,5 +1,5 @@
 import { redisClient } from '../libs/redis.js';
-import { User } from '../models/user.model.js';
+import { User } from '../models/index.js';
 
 const OTP_PREFIX = 'otp:';
 

@@ -1,4 +1,4 @@
-import { MessageRole } from "../models/message.model.js";
+import { MessageRole } from "../models/index.js";
 
 export interface CreateMessageInput {
     userId: string;

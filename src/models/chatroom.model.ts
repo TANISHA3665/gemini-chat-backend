@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { User } from './user.model.js';
-import { Message } from './message.model.js';
+import { User, Message  } from '../models/index.js';
 
 export class Chatroom extends Model {
     public id!: string;

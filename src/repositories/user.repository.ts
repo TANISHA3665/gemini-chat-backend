@@ -1,4 +1,4 @@
-import { User } from '../models/user.model.js';
+import { User } from '../models/index.js';
 
 export const UserRepository = {
     async findById(id: string) {

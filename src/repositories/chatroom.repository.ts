@@ -1,4 +1,4 @@
-import { Chatroom } from '../models/chatroom.model.js';
+import { Chatroom } from '../models/index.js';
 
 export const ChatroomRepository = {
     async create(data: { userId: string; topic: string; }) {

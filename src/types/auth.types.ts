@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Tier } from "../models/user.model.js";
+import { Tier } from "../models/index.js";
 
 export interface AuthSendOtpInput { mobile: string; }
 

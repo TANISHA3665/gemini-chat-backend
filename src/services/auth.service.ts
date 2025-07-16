@@ -1,9 +1,6 @@
-import { generateOtp } from '../utils/otp.js';
-import { signJwt } from '../utils/jwt.js';
-import { AuthSendOtpInput, AuthVerifyOtpInput, changePasswordInput, JwtPayload } from '../types/auth.types.js';
-import { UserRepository } from '../repositories/user.repository.js';
-import { AuthRepository } from '../repositories/auth.repository.js';
-import { checkOtpRateLimit } from '../utils/otpRateLimit.js';
+import { generateOtp, signJwt, checkOtpRateLimit } from '../utils/index.js';
+import { AuthSendOtpInput, AuthVerifyOtpInput, changePasswordInput, JwtPayload } from '../types/index.js';
+import { UserRepository, AuthRepository } from '../repositories/index.js';
 
 export const AuthService = {
 

@@ -1,11 +1,7 @@
 import { Router } from 'express';
-import { authenticate } from '../middlewares/authenticate.middleware.js';
-import { validate } from '../middlewares/validate.middleware.js';
-import { createChatroomSchema } from '../validators/chatroom.validator.js';
-import { ChatroomController } from '../controllers/chatroom.controller.js';
-import { sendMessageSchema } from '../validators/message.validator.js';
-import { MessageController } from '../controllers/message.controller.js';
-import { geminiRateLimit } from '../middlewares/ratelimit.middleware.js';
+import { authenticate, validate, geminiRateLimit } from '../middlewares/index.js';
+import { createChatroomSchema, sendMessageSchema } from '../validators/index.js';
+import { ChatroomController, MessageController } from '../controllers/index.js';
 
 const router = Router();
 
