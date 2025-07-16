@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/auth.service.js'
-import { AuthenticatedRequest } from '../middlewares/authenticate.middleware.js'
+import { AuthenticatedRequest } from '../types/auth.types.js';
 
 export const AuthController = {
     async sendOtp(req: Request, res: Response, next: NextFunction) {

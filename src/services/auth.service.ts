@@ -1,6 +1,6 @@
 import { generateOtp } from '../utils/otp.js';
 import { signJwt } from '../utils/jwt.js';
-import { AuthSendOtpInput, AuthVerifyOtpInput, JwtPayload } from '../types/auth.types.js';
+import { AuthSendOtpInput, AuthVerifyOtpInput, changePassword, JwtPayload } from '../types/auth.types.js';
 import { UserRepository } from '../repositories/user.repository.js';
 import { AuthRepository } from '../repositories/auth.repository.js';
 import { checkOtpRateLimit } from '../utils/otpRateLimit.js';
@@ -35,7 +35,7 @@ export const AuthService = {
         return { token };
     },
 
-    async signup(data: { mobile: string; name?: string; password?: string; }) {
+    async signup(data: AuthSendOtpInput) {
         const exists = await AuthRepository.findUserByMobile(data.mobile);
 
         if (exists) throw new Error('User already exists');
@@ -47,13 +47,10 @@ export const AuthService = {
         return { token };
     },
 
-    async changePassword(userId: string, newPassword: string) {
-        const user = await UserRepository.findById(userId);
+    async changePassword(data: changePassword) {
+        const user = await UserRepository.findById(data.id);
         if (!user) throw new Error('User not found');
 
-        user.password = newPassword;
-        await UserRepository.updateUser(userId, { password: newPassword });
-
-        return { message: 'Password updated successfully' };
+        await UserRepository.updateUser(data.id, { password: data.newPassword });
     },
 };

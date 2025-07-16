@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { MessageService } from '../services/message.service.js';
-import { AuthenticatedRequest } from '../middlewares/authenticate.middleware.js';
+import { AuthenticatedRequest } from '../types/auth.types.js';
 
 export const MessageController = {
     async send(req: AuthenticatedRequest, res: Response, next: NextFunction) {
@@ -11,7 +11,7 @@ export const MessageController = {
             if (!req.user) {
                 return res.status(401).json({ error: 'Unauthorized: User not found.' });
             }
-            
+
             const [userMsg, aiMsg] = await MessageService.sendAndRespond(req.user.id, chatroomId, content);
             res.status(201).json({ userMsg, aiMsg });
         } catch (err) {

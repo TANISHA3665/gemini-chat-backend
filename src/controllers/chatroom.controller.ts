@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { ChatroomService } from '../services/chatroom.service.js';
-import { AuthenticatedRequest } from '../middlewares/authenticate.middleware.js';
+import { AuthenticatedRequest } from '../types/auth.types.js';
 
 export const ChatroomController = {
     async create(req: AuthenticatedRequest, res: Response, next: NextFunction) {

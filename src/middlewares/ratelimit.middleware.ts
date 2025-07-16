@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { checkGeminiRateLimit } from '../utils/geminiRateLimit.js';
-import { AuthenticatedRequest } from './authenticate.middleware.js';
+import { AuthenticatedRequest } from '../types/auth.types.js';
 
 export const geminiRateLimit = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const userId = req.user?.id;

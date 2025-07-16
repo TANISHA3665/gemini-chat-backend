@@ -1,6 +1,6 @@
 // src/modules/user/user.controller.ts
 import { Response } from 'express';
-import { AuthenticatedRequest } from '../middlewares/authenticate.middleware.js';
+import { AuthenticatedRequest } from '../types/auth.types.js';
 import { UserService } from '../services/user.service.js';
 
 export const UserController = {
