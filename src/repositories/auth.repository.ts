@@ -1,11 +1,11 @@
+import { redisClient } from '../libs/redis.js';
 import { User } from '../models/user.model.js';
-import { redisClient } from '../config/redis.config.js';
 
 const OTP_PREFIX = 'otp:';
 
 export const AuthRepository = {
     async storeOtp(mobile: string, otp: string) {
-        await redisClient.set(`${OTP_PREFIX}${mobile}`, otp, { EX: 300 });
+        await redisClient.set(`${OTP_PREFIX}${mobile}`, otp, 'EX', 300);
     },
     
     async getOtp(mobile: string) {

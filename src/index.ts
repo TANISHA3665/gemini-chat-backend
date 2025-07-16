@@ -1,9 +1,9 @@
 import express, { Response } from 'express';
-import { sequelize } from './config/sequelize.config.js';
 import { ENV } from './config/env.config.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import chatroomRoutes from './routes/chatroom.routes.js';
+import { sequelize } from './libs/db.js';
 
 // Init Express App
 const app = express();

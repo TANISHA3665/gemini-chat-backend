@@ -6,6 +6,10 @@ export const geminiRateLimit = async (req: AuthenticatedRequest, res: Response, 
     const userId = req.user?.id;
     const tier = req.user?.tier || 'BASIC';
 
+    if (!userId) {
+        return res.status(401).json({ error: 'Unauthorized: User ID is missing.'});
+    }
+
     const { allowed, ttl } = await checkGeminiRateLimit(userId, tier);
 
     if (!allowed) {

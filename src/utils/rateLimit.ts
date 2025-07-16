@@ -1,4 +1,4 @@
-import { redisClient } from '../config/redis.config.js';
+import { redisClient } from '../libs/redis.js';
 
 export async function checkRateLimit(key: string, limit: number, ttlSeconds: number): Promise<{ allowed: boolean, ttl: number; }> {
     const count = await redisClient.incr(key);

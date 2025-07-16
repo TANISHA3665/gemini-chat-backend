@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize';
-import { ENV } from './env.config.js';
 import { initUserModel, User } from '../models/user.model.js';
 import { initChatroomModel, Chatroom } from '../models/chatroom.model.js';
 import { initMessageModel, Message } from '../models/message.model.js';
+import { ENV } from '../config/env.config.js';
 
 const sequelize = new Sequelize(
     ENV.DB.NAME,
@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
         dialect: 'postgres',
         host: ENV.DB.HOST,
         port: ENV.DB.PORT,
-        logging: ENV.NODE_ENV !== 'production',
+        logging: false,
     }
 );
 
