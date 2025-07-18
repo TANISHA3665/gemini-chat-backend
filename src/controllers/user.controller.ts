@@ -5,9 +5,9 @@ import { UserService } from '../services/index.js';
 
 
 export async function getProfile(req: AuthenticatedRequest, res: Response) {
-    const userId = req.user!.id;
+    const id = req.user!.id;
 
-    const user = await UserService.getUserById(userId);
+    const user = await UserService.getUserById({ id });
     
-    res.status(200).json({ user });
+    res.status(200).json({ data: user });
 };

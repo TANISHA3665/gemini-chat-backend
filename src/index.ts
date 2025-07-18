@@ -6,7 +6,7 @@ import mainRoutes from './routes/index.js';
 import { connectToDatabase, connectToRedis } from './libs/init/index.js';
 
 import { errorHandler } from './middlewares/index.js';
-import './queues/index.js';
+import { initGeminiQueue } from './libs/bullmq.js';
 
 const app = express();
 app.use(express.json());
@@ -25,6 +25,8 @@ const startServer = async () => {
     try {
         await connectToDatabase();
         await connectToRedis();
+
+        initGeminiQueue();
 
         app.listen(ENV.PORT, () => {
             console.log(` Server running on http://localhost:${ENV.PORT}`);

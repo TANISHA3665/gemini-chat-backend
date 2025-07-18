@@ -2,7 +2,9 @@ import { User } from '../models/index.js';
 
 export const UserRepository = {
     async findById(id: string) {
-        return await User.findByPk(id);
+        return await User.findByPk(id, {
+            attributes: ["id", "mobile", "status", "updatedAt", "createdAt"]
+        });
     },
     
     async findAll() {

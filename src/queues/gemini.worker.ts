@@ -1,23 +1,26 @@
-import { Worker } from '../libs/bullmq.js';
+import { Worker } from 'bullmq';
 import { MessageRole } from '../models/index.js';
 import { MessageService, generateGeminiReply } from '../services/index.js';
+import { ENV } from '../config/env.config.js';
 
-new Worker(
+const redisUrl = ENV.REDIS_URL!;
+const redisUrlObj = new URL(redisUrl);
+
+const worker = new Worker(
     'gemini',
     async (job) => {
-        const { prompt, userId, chatroomId } = job.data;
+        const { prompt } = job.data;
         const reply = await generateGeminiReply(prompt);
-
-        await MessageService.create({
-            userId,
-            chatroomId,
-            content: reply,
-            role: MessageRole.AI
-        });
-
         return reply;
     },
     {
-        connection: { host: 'localhost', port: 6379 },
+        connection: {
+            host: redisUrlObj.hostname,
+            port: Number(redisUrlObj.port),
+            password: redisUrlObj.password,
+            tls: redisUrl.startsWith('rediss://') ? {} : undefined,
+        },
     }
 );
+
+console.log('👷 Gemini Worker is running...');

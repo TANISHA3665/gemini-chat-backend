@@ -4,7 +4,8 @@ import { AuthenticatedRequest } from '../types/index.js';
 
 export const createCheckoutSession = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
-        const url = await StripeService.createCheckoutSession(req.user!.id);
+        const userId = req.user!.id;
+        const url = await StripeService.createCheckoutSession({ userId});
         res.status(200).json({ url });
     } catch (err) {
         next(err);

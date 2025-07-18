@@ -1,14 +1,17 @@
-import { redisClient } from "../libs/redis.js";
+import { getRedisClient } from "../libs/init/redis.js";
 
 export const Cache = {
     async get(key: string) {
-        const val = await redisClient.get(key);
+        const redis = getRedisClient();
+        const val = await redis.get(key);
         return val ? JSON.parse(val) : null;
     },
     async set(key: string, value: any, ttl: number = 300) {
-        await redisClient.set(key, JSON.stringify(value), 'EX', ttl);
+        const redis = getRedisClient();
+        await redis.set(key, JSON.stringify(value), 'EX', ttl);
     },
     async del(key: string) {
-        await redisClient.del(key);
+        const redis = getRedisClient();
+        await redis.del(key);
     },
 };

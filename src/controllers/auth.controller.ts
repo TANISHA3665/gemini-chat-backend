@@ -25,8 +25,8 @@ export async function verifyOtp(req: Request, res: Response, next: NextFunction)
 export async function signup(req: Request, res: Response, next: NextFunction) {
     try {
         const { mobile } = req.body;
-        const token = await AuthService.signup({ mobile });
-        res.status(201).json({ token });
+        const result = await AuthService.signup({ mobile });
+        res.status(201).json({ message: 'User regitered successgully', token: result.token });
     } catch (err) {
         next(err);
     }

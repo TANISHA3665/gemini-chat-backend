@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from '@google/genai';
 
 const ai = new GoogleGenAI({});
 
@@ -8,9 +8,5 @@ export async function generateGeminiReply(prompt: string): Promise<string> {
         contents: prompt,
     });
 
-    if (!response || !response.text) {
-        throw new Error('Failed to generate response from Gemini');
-    }
-    return response.text;
-};
-
+  return response.text ?? '';
+}

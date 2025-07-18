@@ -4,10 +4,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "tsc --watch"
-  },
+  "build": "tsc",
+  "start": "node dist/index.js",
+  "dev:server": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/index.ts\"",
+  "dev:worker": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/queues/gemini.worker.ts\"",
+  "dev:all": "concurrently \"npm run dev:server\" \"npm run dev:worker\""
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -28,6 +30,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.13",
+    "concurrently": "^9.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }

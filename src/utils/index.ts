@@ -1,5 +1,4 @@
 export * from './cache.js';
-export * from './gemini.js';
 export * from './geminiRateLimit.js';
 export * from './jwt.js';
 export * from './otp.js';

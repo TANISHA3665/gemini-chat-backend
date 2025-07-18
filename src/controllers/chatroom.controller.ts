@@ -9,7 +9,7 @@ export async function create(req: AuthenticatedRequest, res: Response, next: Nex
 
         const chatroom = await ChatroomService.create({ userId, topic });
         
-        res.status(201).json({ chatroom });
+        res.status(201).json({message:'Chatroom created successfully', data: chatroom });
     } catch (err) {
         next(err);
     }

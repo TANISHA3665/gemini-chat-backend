@@ -1,15 +1,16 @@
-import { redisClient } from "../redis.js";
+import { Redis } from 'ioredis';
+import { ENV } from '../../config/env.config.js';
 
-export async function connectToRedis() {
-    return new Promise<void>((resolve, reject) => {
-        redisClient.on('connect', () => {
-            console.log('Redis connected');
-            resolve();
-        });
-        
-        redisClient.on('error', (err) => {
-            console.error( 'Redis error:', err);
-            reject(err);
-        });
+let redisClient: Redis;
+
+export const connectToRedis = () => {
+    redisClient = new Redis(ENV.REDIS_URL!, {
+        tls: ENV.REDIS_URL?.startsWith('rediss://') ? {} : undefined
     });
+    console.log('✅ Redis connected');
+};
+
+export const getRedisClient = () => {
+    if (!redisClient) throw new Error('Redis client not initialized');
+    return redisClient;
 };
